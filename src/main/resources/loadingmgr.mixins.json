@@ -1,0 +1,14 @@
+{
+    "required": true,
+    "package": "net.iafenvoy.loadingmgr.mixins",
+    "compatibilityLevel": "JAVA_8",
+    "client": [
+        "SplashMixin",
+        "ModelManagerMixin",
+        "TextureStitcherMixin",
+        "SpriteAtlasTextureMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

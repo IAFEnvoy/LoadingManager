@@ -1,0 +1,33 @@
+{
+    "schemaVersion": 1,
+    "id": "loadingmgr",
+    "version": "1.0.0",
+
+    "name": "Loading Manager",
+    "description": "",
+    "authors": [
+        "IAFEnvoy"
+    ],
+
+    "license": "GPL 3.0",
+    "icon": "assets/cosmetics/icon.png",
+
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "net.iafenvoy.loadingmgr.entrypoints.NumberCounter"
+        ]
+    },
+    "mixins": [
+        "loadingmgr.mixins.json"
+    ],
+
+    "depends": {
+        "fabricloader": ">=0.7.3",
+        "minecraft": "1.16.x",
+        "java": ">=8"
+    },
+    "suggests": {
+        "another-mod": "*"
+    }
+}
