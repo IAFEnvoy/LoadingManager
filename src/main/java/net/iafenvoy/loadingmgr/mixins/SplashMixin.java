@@ -14,16 +14,14 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-/**
- * @author Indigo Amann
- */
 @Mixin(SplashScreen.class)
 public abstract class SplashMixin extends Overlay {
-
   @Shadow
   private MinecraftClient client;
   @Shadow
   private float progress;
+  @Shadow
+  private long reloadCompleteTime;
 
   private void renderProgressBar(MatrixStack matrices, int x1, int y1, int x2, int y2, float opacity,
       float loadingProgress, String text) {
@@ -52,16 +50,36 @@ public abstract class SplashMixin extends Overlay {
     int width = this.client.getWindow().getScaledWidth();
     int offset = (int) (Math.min((double) this.client.getWindow().getScaledWidth() * 0.75D,
         (double) this.client.getWindow().getScaledHeight()) * 0.5D);
+    int m1 = (int) ((double) this.client.getWindow().getScaledHeight() * 0.1D);
     int t1 = (int) ((double) this.client.getWindow().getScaledHeight() * 0.7D);
     int t2 = (int) ((double) this.client.getWindow().getScaledHeight() * 0.8D);
     int t3 = (int) ((double) this.client.getWindow().getScaledHeight() * 0.9D);
     matrices.push();
-    renderProgressBar(matrices, width / 2 - offset, t1 - 5, width / 2 + offset, t1 + 5, 1.0F, progress,
+    renderProgressBar(matrices, width / 2 - offset, m1 - 5, width / 2 + offset, m1 + 5, opacity, getMemoryPrecentage(),
+        getMemoryUsage());
+    renderProgressBar(matrices, width / 2 - offset, t1 - 5, width / 2 + offset, t1 + 5, opacity, progress,
         "Total Progress");
-    renderProgressBar(matrices, width / 2 - offset, t2 - 5, width / 2 + offset, t2 + 5, 1.0F,
+    renderProgressBar(matrices, width / 2 - offset, t2 - 5, width / 2 + offset, t2 + 5, opacity,
         LoadingStats.now.getValue1(), LoadingStats.now.getText1());
-    renderProgressBar(matrices, width / 2 - offset, t3 - 5, width / 2 + offset, t3 + 5, 1.0F,
+    renderProgressBar(matrices, width / 2 - offset, t3 - 5, width / 2 + offset, t3 + 5, opacity,
         LoadingStats.getValue(), LoadingStats.now.getText2());
     matrices.pop();
+  }
+
+  private static long bytesToMb(long bytes) {
+    return bytes / 1024L / 1024L;
+  }
+
+  private static String getMemoryUsage() {
+    long memMax = Runtime.getRuntime().maxMemory();
+    long memTotal = Runtime.getRuntime().totalMemory();
+    long memFree = Runtime.getRuntime().freeMemory();
+    long memUsed = memTotal - memFree;
+    return "Memory : " + (memUsed * 100L / memMax) + "% " + bytesToMb(memUsed) + "MB/" + bytesToMb(memMax) + "MB";
+  }
+
+  private static float getMemoryPrecentage() {
+    return (float) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory())
+        / Runtime.getRuntime().maxMemory();
   }
 }

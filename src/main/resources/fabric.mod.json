@@ -4,13 +4,13 @@
     "version": "1.0.0",
 
     "name": "Loading Manager",
-    "description": "",
+    "description": "Add more loading progress bars.",
     "authors": [
         "IAFEnvoy"
     ],
 
     "license": "GPL 3.0",
-    "icon": "assets/cosmetics/icon.png",
+    "icon": "icon.png",
 
     "environment": "*",
     "entrypoints": {
