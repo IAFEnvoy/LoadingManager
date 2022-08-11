@@ -1,7 +1,7 @@
 {
     "schemaVersion": 1,
     "id": "loadingmgr",
-    "version": "1.0.0",
+    "version": "1.0.1",
 
     "name": "Loading Manager",
     "description": "Add more loading progress bars.",
@@ -23,9 +23,9 @@
     ],
 
     "depends": {
-        "fabricloader": ">=0.7.3",
-        "minecraft": "1.16.x",
-        "java": ">=8"
+        "fabricloader": ">=0.12.12",
+        "minecraft": "1.17.x",
+        "java": ">=16"
     },
     "suggests": {
         "another-mod": "*"
